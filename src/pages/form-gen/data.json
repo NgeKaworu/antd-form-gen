@@ -1,0 +1,63 @@
+[
+  {
+    "id": "laiwenbumen",
+    "title": "来文部门",
+    "type": "Select",
+    "isrequired": true,
+    "datasource": ["e", "f", "g"],
+    "layout": {
+      "xs": 24,
+      "sm": 12
+    }
+  },
+  {
+    "id": "nigaoren",
+    "title": "拟稿人",
+    "type": "Input",
+    "isrequired": true,
+    "layout": {
+      "xs": 24,
+      "sm": 12
+    }
+  },
+  {
+    "id": "wenjianbiaoti",
+    "title": "文件标题",
+    "type": "Input",
+    "isrequired": true,
+        "layout": {
+      "xs": 24,
+      "sm": 24
+    }
+  },
+  {
+    "id": "shifougaizhang",
+    "title": "是否盖章",
+    "type": "Switch",
+    "isrequired": false,
+    "layout": {
+      "xs": 24,
+      "sm": 8
+    }
+  },
+  {
+    "id": "chaosongren",
+    "title": "抄送人",
+    "type": "Select",
+    "isrequired": false,
+    "datasource": ["a", "b", "c"],
+    "layout": {
+      "xs": 24,
+      "sm": 8
+    }
+  },
+  {
+    "id": "chaosongren2",
+    "title": "抄送人2",
+    "type": "Select",
+    "isrequired": false,
+    "datasource": ["a2", "b2", "c2"],
+    "layout": { "xs": 24, "sm": 8 }
+  }
+  
+]
