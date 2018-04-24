@@ -25,7 +25,7 @@
     "title": "文件标题",
     "type": "Input",
     "isrequired": true,
-        "layout": {
+    "layout": {
       "xs": 24,
       "sm": 24
     }
@@ -58,6 +58,12 @@
     "isrequired": false,
     "datasource": ["a2", "b2", "c2"],
     "layout": { "xs": 24, "sm": 8 }
+  },
+  {
+    "id": "chaosongren3",
+    "title": "抄送人3",
+    "type": "Upload",
+    "isrequired": true,
+    "layout": { "xs": 24, "sm": 24 }
   }
-  
 ]

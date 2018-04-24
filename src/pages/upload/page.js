@@ -51,9 +51,10 @@ class Demo extends React.Component {
     });
   };
 
-  handlePreviewCancel = () => this.setState({
-    previewVisible: false
-  })
+  handlePreviewCancel = () =>
+    this.setState({
+      previewVisible: false
+    });
 
   // getImgURL = (img, cb) => {
   //   const reader = new FileReader();
@@ -78,16 +79,17 @@ class Demo extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const {
-      previewVisible,
-      previewImage,
-      fileList
-    } = this.state;
+    const { previewVisible, previewImage, fileList } = this.state;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 }
     };
-    const fieldObj = { valuePropName: "fileList", getValueFromEvent: this.handleUploadChange, initialValue: this.state.fileList, rules: [{ required: true }] };
+    const fieldObj = {
+      valuePropName: "fileList",
+      getValueFromEvent: this.handleUploadChange,
+      initialValue: this.state.fileList,
+      rules: [{ required: true }]
+    };
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
