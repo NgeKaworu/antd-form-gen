@@ -11,7 +11,8 @@ import {
   Col,
   Upload,
   message,
-  Modal
+  Modal,
+  DatePicker
 } from "antd";
 import data from "./data.json";
 
@@ -132,6 +133,8 @@ class FormGen extends Component {
           </Upload>
         );
       }
+      case "datepick":
+        return <DatePicker format="YYYY-MM-DD" />;
       default:
         return null;
     }
@@ -157,7 +160,6 @@ class FormGen extends Component {
         wrapperCol: { sm: warpLayout }
       };
       let fieldObj = {
-        validateTrigger: ["onChange", "onBlur"],
         rules: [
           {
             required: k.isrequired,
@@ -185,22 +187,22 @@ class FormGen extends Component {
     });
     return (
       <div>
-      <Form onSubmit={this.handleSubmit}>
-        <Row>{formItems}</Row>
-        <FormItem {...formItemLayoutWithOutLabel}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </FormItem>
-      </Form>
-              <Modal
+        <Form onSubmit={this.handleSubmit}>
+          <Row>{formItems}</Row>
+          <FormItem {...formItemLayoutWithOutLabel}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </FormItem>
+        </Form>
+        <Modal
           visible={previewVisible}
           footer={null}
           onCancel={this.handlePreviewCancel}
         >
           <img alt="preview" style={{ width: "100%" }} src={previewImage} />
         </Modal>
-        </div>
+      </div>
     );
   }
 }

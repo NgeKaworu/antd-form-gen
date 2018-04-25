@@ -1,5 +1,4 @@
-[
-  {
+[{
     "id": "laiwenbumen",
     "title": "来文部门",
     "type": "Select",
@@ -52,18 +51,24 @@
     }
   },
   {
-    "id": "chaosongren2",
-    "title": "抄送人2",
-    "type": "Select",
-    "isrequired": false,
-    "datasource": ["a2", "b2", "c2"],
-    "layout": { "xs": 24, "sm": 8 }
+    "id": "shijian",
+    "title": "时间",
+    "type": "datepick",
+
+    "isrequired": true,
+    "layout": {
+      "xs": 24,
+      "sm": 8
+    }
   },
   {
-    "id": "chaosongren3",
-    "title": "抄送人3",
+    "id": "zhaopian",
+    "title": "上传照片",
     "type": "Upload",
     "isrequired": true,
-    "layout": { "xs": 24, "sm": 24 }
+    "layout": {
+      "xs": 24,
+      "sm": 24
+    }
   }
 ]
