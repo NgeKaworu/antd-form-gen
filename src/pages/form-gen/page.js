@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Form,
   Input,
@@ -12,15 +12,14 @@ import {
   Upload,
   message,
   Modal,
-  DatePicker
-} from "antd";
-import data from "./data.json";
+  DatePicker,
+} from 'antd';
 
 const FormItem = Form.Item;
 
 class FormGen extends Component {
   state = {
-    previewImage: "",
+    previewImage: '',
     previewVisible: false,
     fileList: [
       // {
@@ -30,15 +29,14 @@ class FormGen extends Component {
       //   url:
       //     "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
       // }
-    ]
+    ],
   };
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
-        // this.props.handleSubmit(values);
+        this.props.handleSubmit(values);
       }
     });
   };
@@ -50,9 +48,8 @@ class FormGen extends Component {
     }
     const { fileList } = e;
     // console.log("fileList \n", fileList);
-    if (fileList.some(i => i.status === "error"))
-      message.error("上传失败 请重试");
-    const newFileList = fileList.filter(i => i.status !== "error");
+    if (fileList.some(i => i.status === 'error')) message.error('上传失败 请重试');
+    const newFileList = fileList.filter(i => i.status !== 'error');
 
     // console.log("before \n", this.state.fileList);
     this.setState({ fileList: newFileList });
@@ -64,13 +61,13 @@ class FormGen extends Component {
   handlePreview = file => {
     this.setState({
       previewImage: file.url || file.thumbUrl,
-      previewVisible: true
+      previewVisible: true,
     });
   };
 
   handlePreviewCancel = () =>
     this.setState({
-      previewVisible: false
+      previewVisible: false,
     });
 
   // getImgURL = (img, cb) => {
@@ -80,11 +77,11 @@ class FormGen extends Component {
   // };
 
   beforeUpload = file => {
-    const isImg = file.type === "image/jpeg" || "image/png" || "image/gif";
-    if (!isImg) message.error("你只能上传图片");
+    const isImg = file.type === 'image/jpeg' || 'image/png' || 'image/gif';
+    if (!isImg) message.error('你只能上传图片');
 
     const isLt2M = file.size / 2048 > 2;
-    if (!isLt2M) message.error("照片超过2MB!");
+    if (!isLt2M) message.error('照片超过2MB!');
     return isImg && isLt2M;
   };
 
@@ -97,11 +94,11 @@ class FormGen extends Component {
   renderComponent = k => {
     const type = k.type && k.type.toLowerCase();
     switch (type) {
-      case "input":
+      case 'input':
         return <Input />;
-      case "radio":
+      case 'radio':
         return <Radio />;
-      case "select": {
+      case 'select': {
         return (
           <Select>
             {k.datasource.map(v => (
@@ -112,14 +109,14 @@ class FormGen extends Component {
           </Select>
         );
       }
-      case "switch":
+      case 'switch':
         return (
           <Switch
             checkedChildren={<Icon type="check" />}
             unCheckedChildren={<Icon type="cross" />}
           />
         );
-      case "upload": {
+      case 'upload': {
         const { fileList } = this.state;
         return (
           <Upload
@@ -134,48 +131,51 @@ class FormGen extends Component {
           </Upload>
         );
       }
-      case "datepick":
-        return <DatePicker format="YYYY-MM-DD" />;
+      case 'datepicker':
+        return <DatePicker format={'YYYY-MM-DD' + (!!k.showTime === true ? ' HH:mm' : '')} showTime={k.showTime} />;
+      case 'textarea':
+        return <Input.TextArea rows={6} />;
       default:
-        return null;
+        return <div>未收录该组件,请自行扩展</div>;
     }
   };
 
   render() {
+    const { data } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { previewVisible, previewImage } = this.state;
     const formItemLayoutWithOutLabel = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 20, offset: 4 }
-      }
+        sm: { span: 20, offset: 4 },
+      },
     };
-    getFieldDecorator("keys", { initialValue: data });
-    const keys = getFieldValue("keys");
+    getFieldDecorator('keys', { initialValue: data });
+    const keys = getFieldValue('keys');
     const formItems = keys.map(k => {
       const layout = k.layout || {};
       const lableLayout = 96 / (layout.sm || 24);
       const warpLayout = 24 - lableLayout;
       const formItemLayout = {
         labelCol: { sm: lableLayout },
-        wrapperCol: { sm: warpLayout }
+        wrapperCol: { sm: warpLayout },
       };
       let fieldObj = {
         rules: [
           {
             required: k.isrequired,
-            message: "不能为空"
-          }
-        ]
+            message: '不能为空',
+          },
+        ],
       };
 
       const type = k.type && k.type.toLowerCase();
-      if (type === "upload") {
+      if (type === 'upload') {
         fieldObj = {
           ...fieldObj,
-          valuePropName: "fileList",
+          valuePropName: 'fileList',
           getValueFromEvent: this.handleUploadChange,
-          initialValue: this.state.fileList
+          initialValue: this.state.fileList,
         };
       }
       return (
@@ -192,22 +192,16 @@ class FormGen extends Component {
           <Row>{formItems}</Row>
           <FormItem {...formItemLayoutWithOutLabel}>
             <Button type="primary" htmlType="submit">
-              Submit
+              提交
             </Button>
           </FormItem>
         </Form>
-        <Modal
-          visible={previewVisible}
-          footer={null}
-          onCancel={this.handlePreviewCancel}
-        >
-          <img alt="preview" style={{ width: "100%" }} src={previewImage} />
+        <Modal visible={previewVisible} footer={null} onCancel={this.handlePreviewCancel}>
+          <img alt="preview" style={{ width: '100%' }} src={previewImage} />
         </Modal>
       </div>
     );
   }
 }
 
-const page = Form.create()(FormGen);
-
-export default page;
+export default Form.create()(FormGen);
