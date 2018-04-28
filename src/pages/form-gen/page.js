@@ -13,6 +13,7 @@ import {
   message,
   Modal,
   DatePicker,
+  InputNumber,
 } from 'antd';
 
 const FormItem = Form.Item;
@@ -96,8 +97,6 @@ class FormGen extends Component {
     switch (type) {
       case 'input':
         return <Input />;
-      case 'radio':
-        return <Radio />;
       case 'select': {
         return (
           <Select>
@@ -107,6 +106,17 @@ class FormGen extends Component {
               </Select.Option>
             ))}
           </Select>
+        );
+      }
+      case 'radio': {
+        return (
+          <Radio.Group>
+            {k.datasource.map(v => (
+              <Radio.Button key={k.id + v} value={v}>
+                {v}
+              </Radio.Button>
+            ))}
+          </Radio.Group>
         );
       }
       case 'switch':
@@ -132,9 +142,17 @@ class FormGen extends Component {
         );
       }
       case 'datepicker':
-        return <DatePicker format={'YYYY-MM-DD' + (!!k.showTime === true ? ' HH:mm' : '')} showTime={k.showTime} />;
+        return (
+          <DatePicker
+            format={'YYYY-MM-DD' + (!!k.showTime === true ? ' HH:mm' : '')}
+            showTime={k.showTime}
+          />
+        );
       case 'textarea':
         return <Input.TextArea rows={6} />;
+
+      case 'inputnumber':
+        return <InputNumber min={1} />;
       default:
         return <div>未收录该组件,请自行扩展</div>;
     }
@@ -182,6 +200,7 @@ class FormGen extends Component {
         <Col key={k.id} {...k.layout}>
           <FormItem label={k.title} {...formItemLayout}>
             {getFieldDecorator(k.id, fieldObj)(this.renderComponent(k))}
+            {type === 'inputnumber' && <span> {k.unit}</span>}
           </FormItem>
         </Col>
       );
