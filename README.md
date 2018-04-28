@@ -30,7 +30,7 @@ export default MyForm;
 ```
 /data.json  
 
-```json
+```js
 [
         {
           id: 'input',
@@ -120,4 +120,9 @@ export default MyForm;
       ]
 ```
 
-![效果]()
+然后大概就是这个样子
+![效果](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/usage.png)
+
+---
+
+完
