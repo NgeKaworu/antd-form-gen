@@ -1,6 +1,6 @@
 {
   "name": "antd-form-gen",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "antd-form-gen test",
   "main": "./lib/index.js",
   "files": [
