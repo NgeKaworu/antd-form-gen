@@ -19,7 +19,6 @@
 
 ```jsx
 import react from 'react';
-import { connect } from 'dva';
 import FormGen from 'antd-form-gen';
 import data from './data.json'
 
