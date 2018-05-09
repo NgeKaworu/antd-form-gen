@@ -8,8 +8,6 @@ import {
   Switch,
   Icon,
   Col,
-  message,
-  Modal,
   DatePicker,
   InputNumber
 } from "antd";
@@ -17,9 +15,9 @@ import {
 const FormItem = Form.Item;
 
 const _layout = { span: 24 };
-const _rules = [{ required: true, mssage: "此项不能为空" }];
+const _rules = [{ required: true, message: "此项不能为空" }];
 
-class FormGen extends Component {
+export default class FormGen extends Component {
   renderComponent = k => {
     const type = k.type && k.type.toLowerCase();
     switch (type) {
@@ -28,7 +26,7 @@ class FormGen extends Component {
       case "select": {
         return (
           <Select>
-            {k.datasource.map(v => (
+            {k.dataSource.map(v => (
               <Select.Option key={k.id + v} value={v}>
                 {v}
               </Select.Option>
@@ -39,7 +37,7 @@ class FormGen extends Component {
       case "radio": {
         return (
           <Radio.Group>
-            {k.datasource.map(v => (
+            {k.dataSource.map(v => (
               <Radio.Button key={k.id + v} value={v}>
                 {v}
               </Radio.Button>
@@ -55,45 +53,45 @@ class FormGen extends Component {
           />
         );
       case "datepicker":
-        return (
-          <DatePicker
-            format={"YYYY-MM-DD" + (!!k.showTime === true ? " HH:mm" : "")}
-            showTime={k.showTime}
-          />
-        );
+        return <DatePicker />;
       case "textarea":
-        return <Input.TextArea rows={6} />;
-
+        return <Input.TextArea />;
       case "inputnumber":
-        return <InputNumber min={1} />;
+        return <InputNumber />;
       default:
         return <div>未收录该组件,请自行扩展</div>;
     }
   };
 
   render() {
-    const { data } = this.props;
-    const { getFieldDecorator } = this.props;
+    const { data, getFieldDecorator } = this.props;
     const formItems = data.map(k => {
       const layout = k.layout || _layout;
+      const rules = k.rules || _rules;
+      const initialValue = k.initialValue || null;
+      const props = k.props || null;
       const formItemLayout = _layoutTransform(layout);
-      let fieldObj = {
-        rules: [{ required: k.isrequired, message: "不能为空" }]
+      const fieldOption = {
+        initialValue,
+        rules
       };
+
       return (
         <Col key={k.id} {...k.layout}>
           <FormItem label={k.title} {...formItemLayout}>
-            {getFieldDecorator(k.id, fieldObj)(this.renderComponent(k))}
-            {k.type === "inputnumber" && <span> {k.unit}</span>}
+            {getFieldDecorator(k.id, fieldOption)(
+              !props
+                ? this.renderComponent(k)
+                : React.cloneElement(this.renderComponent(k), props, null)
+            )}
+            {k.suffix && <span> {k.suffix}</span>}
           </FormItem>
         </Col>
       );
     });
-    return <>{formItems}</>;
+    return (<React.Fragment>{formItems}</React.Fragment>);
   }
 }
-
-export default FormGen;
 
 /**
  * layout transform fn
@@ -103,7 +101,7 @@ export default FormGen;
  *
  */
 
-const _layoutTransform = layout => {
+export const _layoutTransform = layout => {
   const layouts = Object.keys(layout);
 
   let formItemLayout = { labelCol: {}, wrapperCol: {} },
