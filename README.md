@@ -1,6 +1,15 @@
 # antd-form-gen | antd 表单生成器
 
-基于 antd 的表单生成器其实就是简单的对`getFieldDecorator`的封装,  
+v1.0.0
+不在支持生成较为复杂的组件, 但是可以和较复杂的组件组合使用
+
+考虑到扩展性, 和易用性, 进行了改写, 可以加载非 cb 型的 initailValue, props, option, rules.
+
+并且用 react16.2 新特性<></>, 使之把提交事件交由父元素管理.
+
+v0.0.3
+基于 antd 的表单生成器其实就是简单的对`getFieldDecorator`的封装,
+
 可以根据 json 对象渲染一个完整的表单很多东西准备在以后慢慢完善
 
 ---
@@ -11,116 +20,167 @@
 
 ---
 
-# Usage | 用法  
+# Usage | 用法
 
-源码很短, 可以自己扩展
+> 源码在`src`下, 非常短.
+> 满足不了就自己扩展
 
 /index.js
 
 ```jsx
-import react from 'react';
-import FormGen from 'antd-form-gen';
-import data from './data.json'
+import { Component } from "react";
+import { Form } from "antd";
+import FormGen from "antd-form-gen";
+import data from "./data.json";
 
+export default class MyForm extends  {
+  render(){
+    const { getFieldDecorator } = this.props.form;
+    return
+    <Form>
+      <FormGen
+        getFieldDecorator={getFieldDecorator}  //需要父元素传递getFieldDecorator创建表单域
+        data={data}  //数据源 @parma Array
+      />;
+    </Form>
 
-const MyForm = () => <FormGen data={data}/> ;
+  }
+}
 
-export default MyForm;
+Form.create()(MyForm)
 ```
-/data.json  
+
+/data.json
 
 ```js
 [
-        {
-          id: 'input',
-          title: '输入框',
-          type: 'Input',
-          isrequired: true,
-          layout: {
-            xs: 24,
-            sm: 24,
-          },
-        },
-        {
-          id: 'select',
-          title: '选择栏',
-          type: 'Select',
-          datasource: ['a', 'b', 'c'],
-          isrequired: false,
-          layout: {
-            xs: 24,
-            sm: 12,
-          },
-        },
-        {
-          id: 'Radio',
-          title: '单选按钮',
-          type: 'Radio',
-          datasource: ['a', 'b', 'c'],
-          isrequired: false,
-          layout: {
-            xs: 24,
-            sm: 12,
-          },
-        },
-        {
-          id: 'datepicker',
-          title: '时间选择器',
-          type: 'datepicker',
-          isrequired: true,
-          layout: {
-            xs: 24,
-            sm: 8,
-          },
-          showTime: {
-            format: 'HH:mm',
-          },
-        },
-        {
-          id: 'switch',
-          title: '开关',
-          type: 'switch',
-          isrequired: false,
-          layout: {
-            xs: 24,
-            sm: 8,
-          },
-        },
-        {
-          id: 'inputnumber',
-          title: '数字输入',
-          type: 'inputnumber',
-          isrequired: false,
-          layout: {
-            xs: 24,
-            sm: 8,
-          },
-        },
-        {
-          id: 'TextArea',
-          title: '文本域',
-          type: 'TextArea',
-          isrequired: true,
-          layout: {
-            xs: 24,
-            sm: 24,
-          },
-        },
-        {
-          id: 'upload',
-          title: '上传',
-          type: 'upload',
-          isrequired: true,
-          layout: {
-            xs: 24,
-            sm: 24,
-          },
-        },
-      ]
+  {
+    id: 'select', //组件id                               
+    title: '选择栏',  //label名  
+    type: 'Select',   //类型
+    dataSource: ['a', 'b', 'c'],  //需要一些特殊组件的自组件
+    initialValue: 'b',  // 初始值
+    layout:  {  // 布局, 三列以内 第一列会自动对齐, 与antd layout规则一致
+      xs: 24,
+      sm: 8,
+    };
+    props: {  // 与对应组件支持的props一致 不支持event 和 cb
+      size: 'large',
+    },
+    options: { // 与getFieldDecorator.option一致 不支持event 和 cb
+      validateTrigger: ['onChange', 'onBlur']
+       },
+  },
+
+]
+```
+
+---
+
+# Example | 例子
+
+/index.js
+
+```jsx
+import react from "react";
+import FormGen from "antd-form-gen";
+import data from "./data.json";
+
+const MyForm = () => <FormGen data={data} />;
+
+export default MyForm;
+```
+
+/data.json
+
+```js
+const _col_1 = {
+  xs: 24,
+  sm: 24
+};
+
+const _col_2 = {
+  xs: 24,
+  sm: 12
+};
+
+const _col_3 = {
+  xs: 24,
+  sm: 8
+};
+
+const data = [
+  {
+    id: "input",
+    title: "输入框",
+    type: "Input",
+    props: {
+      placeholder: "lalal"
+    },
+    layout: _col_1,
+    options: { validateTrigger: ["onChange", "onBlur"] }
+  },
+  {
+    id: "select",
+    title: "选择栏",
+    type: "Select",
+    dataSource: ["a", "b", "c"],
+    layout: _col_2
+  },
+  {
+    id: "Radio",
+    title: "单选按钮",
+    type: "Radio",
+    dataSource: ["a", "b", "c"],
+    layout: _col_2
+  },
+  {
+    id: "datepicker",
+    title: "时间选择器",
+    type: "datepicker",
+    props: {
+      format: "YYYY-MM-DD HH:mm",
+      showTime: { format: "HH:mm" }
+    },
+
+    layout: _col_3
+  },
+  {
+    id: "switch",
+    title: "开关",
+    type: "switch",
+    layout: _col_3,
+    rules: [
+      {
+        required: false
+      }
+    ]
+  },
+  {
+    id: "inputnumber",
+    title: "数字输入",
+    type: "inputnumber",
+    suffix: "分",
+    props: { min: 0, max: 20 },
+    layout: _col_3
+  },
+  {
+    id: "TextArea",
+    title: "内容摘要",
+    type: "TextArea",
+    props: { rows: 6 },
+    layout: _col_1,
+    rules: [
+      {
+        required: false
+      }
+    ],
+    initialValue: "内容摘要, 不少于50字"
+  }
+];
 ```
 
 然后大概就是这个样子
-![效果](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/usage.png)
 
 ---
 

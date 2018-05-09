@@ -70,8 +70,10 @@ export default class FormGen extends Component {
       const rules = k.rules || _rules;
       const initialValue = k.initialValue || null;
       const props = k.props || null;
+      const options = k.options || null;
       const formItemLayout = _layoutTransform(layout);
       const fieldOption = {
+        ...options,
         initialValue,
         rules
       };
@@ -89,7 +91,7 @@ export default class FormGen extends Component {
         </Col>
       );
     });
-    return (<React.Fragment>{formItems}</React.Fragment>);
+    return <React.Fragment>{formItems}</React.Fragment>;
   }
 }
 
