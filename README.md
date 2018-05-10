@@ -78,7 +78,7 @@ Form.create()(MyForm)
 ```
 
 然后就生成了一个`<Select />`
-![usage]()
+![usage](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/usage.png)
 
 ---
 
@@ -204,8 +204,6 @@ const data = [
 
 然后大概就是这个样子
 
-![example]()
+![example](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/example.png)
 
 ---
-
-完
