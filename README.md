@@ -1,13 +1,15 @@
 # antd-form-gen | antd 表单生成器
 
-v1.0.0
+v1.0.0  
+
 不在支持生成较为复杂的组件, 但是可以和较复杂的组件组合使用
 
 考虑到扩展性, 和易用性, 进行了改写, 可以加载非 cb 型的 initailValue, props, option, rules.
 
 并且用 react16.2 新特性<></>, 使之把提交事件交由父元素管理.
 
-v0.0.3
+v0.0.3  
+
 基于 antd 的表单生成器其实就是简单的对`getFieldDecorator`的封装,
 
 可以根据 json 对象渲染一个完整的表单很多东西准备在以后慢慢完善
@@ -77,14 +79,15 @@ Form.create()(MyForm)
 ];
 ```
 
-然后就生成了一个`<Select />`
+然后就生成了一个这样的`<Select/>`
+
 ![usage](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/usage.png)
 
 ---
 
-# Example | 例子
+# Example | 例子  
 
-/index.js
+/index.js  
 
 ```jsx
 import { Component } from "react";
@@ -202,7 +205,7 @@ const data = [
   ];
 ```
 
-然后大概就是这个样子
+然后大概就是这个样子  
 
 ![example](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/example.png)
 
