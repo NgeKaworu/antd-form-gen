@@ -55,25 +55,30 @@ Form.create()(MyForm)
 ```js
 [
   {
-    id: 'select', //组件id                               
-    title: '选择栏',  //label名  
-    type: 'Select',   //类型
-    dataSource: ['a', 'b', 'c'],  //需要一些特殊组件的自组件
-    initialValue: 'b',  // 初始值
-    layout:  {  // 布局, 三列以内 第一列会自动对齐, 与antd layout规则一致
+    id: "select", //组件id
+    title: "选择栏", //label名
+    type: "Select", //类型
+    dataSource: ["a1", "b2", "c3"], //需要一些特殊组件的自组件
+    initialValue: "b2", // 初始值
+    layout: {
+      // 布局, 三列以内 第一列会自动对齐, 与antd layout规则一致
       xs: 24,
-      sm: 8,
-    };
-    props: {  // 与对应组件支持的props一致 不支持event 和 cb
-      size: 'large',
+      sm: 8
     },
-    options: { // 与getFieldDecorator.option一致 不支持event 和 cb
-      validateTrigger: ['onChange', 'onBlur']
-       },
-  },
-
-]
+    props: {
+      // 与对应组件支持的props一致 不支持event 和 cb
+      size: "large"
+    },
+    options: {
+      // 与getFieldDecorator.option一致 不支持event 和 cb
+      validateTrigger: ["onChange", "onBlur"]
+    }
+  }
+];
 ```
+
+然后就生成了一个`<Select />`
+![usage]()
 
 ---
 
@@ -82,13 +87,28 @@ Form.create()(MyForm)
 /index.js
 
 ```jsx
-import react from "react";
+import { Component } from "react";
+import { Form, Button } from "antd";
 import FormGen from "antd-form-gen";
 import data from "./data.json";
+import OtherComponent from './OtherComponent.
 
-const MyForm = () => <FormGen data={data} />;
+export default class MyForm extends  {
+  render(){
+    const { getFieldDecorator } = this.props.form;
+    return
+    <Form>
+      <FormGen
+        getFieldDecorator={getFieldDecorator}  //需要父元素传递getFieldDecorator创建表单域
+        data={data}  //数据源 @parma Array
+      />;
+      <OtherComponent/>  //其他组件
+      <Button type="primary" htmlType="submit">提交</Button>
+    </Form>
+  }
+}
 
-export default MyForm;
+Form.create()(MyForm)
 ```
 
 /data.json
@@ -110,77 +130,81 @@ const _col_3 = {
 };
 
 const data = [
-  {
-    id: "input",
-    title: "输入框",
-    type: "Input",
-    props: {
-      placeholder: "lalal"
-    },
-    layout: _col_1,
-    options: { validateTrigger: ["onChange", "onBlur"] }
-  },
-  {
-    id: "select",
-    title: "选择栏",
-    type: "Select",
-    dataSource: ["a", "b", "c"],
-    layout: _col_2
-  },
-  {
-    id: "Radio",
-    title: "单选按钮",
-    type: "Radio",
-    dataSource: ["a", "b", "c"],
-    layout: _col_2
-  },
-  {
-    id: "datepicker",
-    title: "时间选择器",
-    type: "datepicker",
-    props: {
-      format: "YYYY-MM-DD HH:mm",
-      showTime: { format: "HH:mm" }
-    },
+        {
+          id: 'input',
+          title: '输入框',
+          type: 'Input',
+          props: {
+            placeholder: 'lalal',
+          },
+          layout: _col_1,
+          options: { validateTrigger: ['onChange', 'onBlur'] },
+        },
+        {
+          id: 'select',
+          title: '选择栏',
+          type: 'Select',
+          dataSource: ['a', 'b', 'c'],
+          layout: _col_2,
+        },
+        {
+          id: 'Radio',
+          title: '单选按钮',
+          type: 'Radio',
+          dataSource: ['a', 'b', 'c'],
+          layout: _col_2,
+        },
+        {
+          id: 'datepicker',
+          title: '时间选择器',
+          type: 'datepicker',
+          props: {
+            format: 'YYYY-MM-DD HH:mm',
+            showTime: { format: 'HH:mm' },
+          },
 
-    layout: _col_3
-  },
-  {
-    id: "switch",
-    title: "开关",
-    type: "switch",
-    layout: _col_3,
-    rules: [
-      {
-        required: false
-      }
-    ]
-  },
-  {
-    id: "inputnumber",
-    title: "数字输入",
-    type: "inputnumber",
-    suffix: "分",
-    props: { min: 0, max: 20 },
-    layout: _col_3
-  },
-  {
-    id: "TextArea",
-    title: "内容摘要",
-    type: "TextArea",
-    props: { rows: 6 },
-    layout: _col_1,
-    rules: [
-      {
-        required: false
-      }
-    ],
-    initialValue: "内容摘要, 不少于50字"
-  }
-];
+          layout: _col_3,
+        },
+        {
+          id: 'switch',
+          title: '开关',
+          type: 'switch',
+          layout: _col_3,
+          rules: [
+            {
+              required: false,
+            },
+          ],
+        },
+        {
+          id: 'inputnumber',
+          title: '数字输入',
+          type: 'inputnumber',
+          suffix: '分',
+          props: { min: 0, max: 20 },
+          layout: _col_3,
+        },
+        {
+          id: 'TextArea',
+          title: '内容摘要',
+          type: 'TextArea',
+          props: { rows: 6 },
+          layout: _col_1,
+          rules: [
+            {
+              required: false,
+            },
+          ],
+          initialValue: '内容摘要, 不少于50字',
+        },
+      ],
+    },
+  ];
 ```
 
 然后大概就是这个样子
+
+![example]()
 
 ---
 

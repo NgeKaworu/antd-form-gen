@@ -27,7 +27,7 @@ export default class FormGen extends Component {
         return (
           <Select>
             {k.dataSource.map(v => (
-              <Select.Option key={k.id + v} value={v}>
+              <Select.Option key={k.id + " - " + v} value={v}>
                 {v}
               </Select.Option>
             ))}
@@ -38,7 +38,7 @@ export default class FormGen extends Component {
         return (
           <Radio.Group>
             {k.dataSource.map(v => (
-              <Radio.Button key={k.id + v} value={v}>
+              <Radio.Button key={k.id + " - " + v} value={v}>
                 {v}
               </Radio.Button>
             ))}
@@ -78,20 +78,25 @@ export default class FormGen extends Component {
         rules
       };
 
+      const RenderComponent = this.renderComponent(k);
       return (
         <Col key={k.id} {...k.layout}>
           <FormItem label={k.title} {...formItemLayout}>
             {getFieldDecorator(k.id, fieldOption)(
               !props
-                ? this.renderComponent(k)
-                : React.cloneElement(this.renderComponent(k), props, null)
+                ? RenderComponent
+                : React.cloneElement(
+                    RenderComponent,
+                    props,
+                    RenderComponent.props.children
+                  )
             )}
             {k.suffix && <span> {k.suffix}</span>}
           </FormItem>
         </Col>
       );
     });
-    return <React.Fragment>{formItems}</React.Fragment>;
+    return <>{formItems}</>;
   }
 }
 
