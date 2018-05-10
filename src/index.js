@@ -96,7 +96,7 @@ export default class FormGen extends Component {
         </Col>
       );
     });
-    return <>{formItems}</>;
+    return <React.Fragment>{formItems}</React.Fragment>;
   }
 }
 
