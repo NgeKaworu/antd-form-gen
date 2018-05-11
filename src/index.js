@@ -1,68 +1,31 @@
-import React, { Component } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Switch,
-  Icon,
-  Col,
-  DatePicker,
-  InputNumber
-} from "antd";
+import React, { Component } from 'react';
 
-const FormItem = Form.Item;
+require('antd/dist/antd.css'); 
+
+const _antd = require('antd');
+
+const _interopRequireWildcard = obj => {
+  if (obj && obj.__esModule) {
+    return obj;
+  } else {
+    var newObj = {};
+    if (obj != null) {
+      for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+      }
+    }
+    newObj.default = obj;
+    return newObj;
+  }
+};
+const Antd = _interopRequireWildcard(_antd);
+
+const FormItem = Antd.Form.Item;
 
 const _layout = { span: 24 };
-const _rules = [{ required: true, message: "此项不能为空" }];
+const _rules = [{ required: true, message: '此项不能为空' }];
 
 export default class FormGen extends Component {
-  renderComponent = k => {
-    const type = k.type && k.type.toLowerCase();
-    switch (type) {
-      case "input":
-        return <Input />;
-      case "select": {
-        return (
-          <Select>
-            {k.dataSource.map(v => (
-              <Select.Option key={k.id + " - " + v} value={v}>
-                {v}
-              </Select.Option>
-            ))}
-          </Select>
-        );
-      }
-      case "radio": {
-        return (
-          <Radio.Group>
-            {k.dataSource.map(v => (
-              <Radio.Button key={k.id + " - " + v} value={v}>
-                {v}
-              </Radio.Button>
-            ))}
-          </Radio.Group>
-        );
-      }
-      case "switch":
-        return (
-          <Switch
-            checkedChildren={<Icon type="check" />}
-            unCheckedChildren={<Icon type="cross" />}
-          />
-        );
-      case "datepicker":
-        return <DatePicker />;
-      case "textarea":
-        return <Input.TextArea />;
-      case "inputnumber":
-        return <InputNumber />;
-      default:
-        return <div>未收录该组件,请自行扩展</div>;
-    }
-  };
-
   render() {
     const { data, getFieldDecorator } = this.props;
     const formItems = data.map(k => {
@@ -75,26 +38,16 @@ export default class FormGen extends Component {
       const fieldOption = {
         ...options,
         initialValue,
-        rules
+        rules,
       };
 
-      const RenderComponent = this.renderComponent(k);
-      return (
-        <Col key={k.id} {...k.layout}>
+      const RenderComponent = _recursionRender(k);
+      return <Antd.Col key={k.id} {...k.layout}>
           <FormItem label={k.title} {...formItemLayout}>
-            {getFieldDecorator(k.id, fieldOption)(
-              !props
-                ? RenderComponent
-                : React.cloneElement(
-                    RenderComponent,
-                    props,
-                    RenderComponent.props.children
-                  )
-            )}
+            {getFieldDecorator(k.id, fieldOption)(RenderComponent)}
             {k.suffix && <span> {k.suffix}</span>}
           </FormItem>
-        </Col>
-      );
+        </Antd.Col>;
     });
     return <React.Fragment>{formItems}</React.Fragment>;
   }
@@ -117,7 +70,7 @@ export const _layoutTransform = layout => {
 
   if (layouts.length > 0) {
     layouts.forEach(i => {
-      if (typeof layout[i] === "number") {
+      if (typeof layout[i] === 'number') {
         labelTemp = 96 / layout[i];
       } else {
         labelTemp = 96 / (layout[i].span || 24);
@@ -131,4 +84,37 @@ export const _layoutTransform = layout => {
   }
 
   return formItemLayout;
+};
+
+/**
+ * layout transform fn
+ *
+ * @param	( obj || string || number || string )	a obj you wanna render
+ * @return	( react_element )	a createElement can render obj
+ *
+ */
+
+export const _recursionRender = (ds, key) => {
+  if (Array.isArray(ds)) {
+    return ds.map((v, i) => _recursionRender(v, i));
+  } else if (typeof ds === "number" || typeof ds === "string" || ds === null) {
+    return ds;
+  } else if (typeof ds === "object") {
+    const typeArr = ds.type.split(".");
+    const AntdComp =
+      typeArr.length > 1 ? Antd[typeArr[0]][typeArr[1]] : Antd[ds.type];
+    const props = ds.props || null;
+
+    const children =
+      typeof ds.children !== "undefined" && ds.children !== null
+        ? _recursionRender(ds.children)
+        : null;
+
+    const propsWithKey =
+      typeof key !== "undefined" && key !== null
+        ? { key: `${ds.type} - ${key}`, ...props }
+        : props;
+
+    return React.createElement(AntdComp, propsWithKey, children);
+  }
 };
