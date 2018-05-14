@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-require('antd/dist/antd.css'); 
+require("antd/dist/antd.css");
 
-const _antd = require('antd');
+const _antd = require("antd");
 
 const _interopRequireWildcard = obj => {
   if (obj && obj.__esModule) {
@@ -11,7 +11,8 @@ const _interopRequireWildcard = obj => {
     var newObj = {};
     if (obj != null) {
       for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+        if (Object.prototype.hasOwnProperty.call(obj, key))
+          newObj[key] = obj[key];
       }
     }
     newObj.default = obj;
@@ -23,7 +24,7 @@ const Antd = _interopRequireWildcard(_antd);
 const FormItem = Antd.Form.Item;
 
 const _layout = { span: 24 };
-const _rules = [{ required: true, message: '此项不能为空' }];
+const _rules = [{ required: true, message: "此项不能为空" }];
 
 export default class FormGen extends Component {
   render() {
@@ -38,16 +39,18 @@ export default class FormGen extends Component {
       const fieldOption = {
         ...options,
         initialValue,
-        rules,
+        rules
       };
 
       const RenderComponent = _recursionRender(k);
-      return <Antd.Col key={k.id} {...k.layout}>
+      return (
+        <Antd.Col key={k.id} {...k.layout}>
           <FormItem label={k.title} {...formItemLayout}>
             {getFieldDecorator(k.id, fieldOption)(RenderComponent)}
             {k.suffix && <span> {k.suffix}</span>}
           </FormItem>
-        </Antd.Col>;
+        </Antd.Col>
+      );
     });
     return <React.Fragment>{formItems}</React.Fragment>;
   }
@@ -70,7 +73,7 @@ export const _layoutTransform = layout => {
 
   if (layouts.length > 0) {
     layouts.forEach(i => {
-      if (typeof layout[i] === 'number') {
+      if (typeof layout[i] === "number") {
         labelTemp = 96 / layout[i];
       } else {
         labelTemp = 96 / (layout[i].span || 24);
@@ -100,10 +103,18 @@ export const _recursionRender = (ds, key) => {
   } else if (typeof ds === "number" || typeof ds === "string" || ds === null) {
     return ds;
   } else if (typeof ds === "object") {
+    if (typeof ds.type === "undefined") return ds;
     const typeArr = ds.type.split(".");
     const AntdComp =
       typeArr.length > 1 ? Antd[typeArr[0]][typeArr[1]] : Antd[ds.type];
+
     const props = ds.props || null;
+
+    let transProps = { ...props };
+
+    for (let i in transProps) {
+      transProps[i] = _recursionRender(transProps[i]);
+    }
 
     const children =
       typeof ds.children !== "undefined" && ds.children !== null
@@ -112,8 +123,8 @@ export const _recursionRender = (ds, key) => {
 
     const propsWithKey =
       typeof key !== "undefined" && key !== null
-        ? { key: `${ds.type} - ${key}`, ...props }
-        : props;
+        ? { key: `${ds.type} - ${key}`, ...transProps }
+        : transProps;
 
     return React.createElement(AntdComp, propsWithKey, children);
   }
