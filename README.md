@@ -1,10 +1,10 @@
 # antd-form-gen | antd 表单生成器
 
-v2.1.0
+**v2.1.0**
 
 支持 prop 的组件渲染.
 
-v2.0.0
+**v2.0.0**
 
 请不要吐槽我为什么一次一个 X 版本=- =, 因为萌新表示本萌大局观有待提高.
 
@@ -19,7 +19,7 @@ dataSource 已经弃用, 用 children 来代替
 > `_layoutTransform`用于转换栅格对象,  
 > `_recursionRender`用于通过 json 结构渲染一切(理论上)antd 组件.
 
-v1.0.0
+**v1.0.0**
 
 不在支持生成较为复杂的组件, 但是可以和较复杂的组件组合使用
 
@@ -27,7 +27,7 @@ v1.0.0
 
 并且用 react16.2 新特性<></>, 使之把提交事件交由父元素管理.
 
-v0.0.3
+**v0.0.3**
 
 基于 antd 的表单生成器其实就是简单的对`getFieldDecorator`的封装,
 
@@ -128,7 +128,9 @@ Form.create()(MyForm)
 
 ![usage](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/usage.png)
 
-### `_layoutTransform()`
+### `_layoutTransform()`  
+
+**接受一个layout对象转换成formItemLayout对象, 三列内首列自动对齐**
 
 ```js
 import { _layoutTransform } from "antd-form-gen";
@@ -151,7 +153,8 @@ const transLayout = _layoutTransform(_col_1);
 // };
 ```
 
-### `_recursionRender()`
+### `_recursionRender()`   
+**通过json渲染antd组件**
 
 ```js
 import React from "react";
@@ -213,7 +216,7 @@ export default MyComp;
 ```
   
 效果如下:  
-![效果图](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/recursionRender)
+![效果图](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/recursionRender.png)
 
 ---
 
