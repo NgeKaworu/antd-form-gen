@@ -1,5 +1,5 @@
 {
-  "presets": ["es2015", "stage-0", "react"],
+  "presets": ["env", "stage-0", "react"],
   "plugins": ["transform-react-jsx",
   ["import", { "libraryName": "antd", "style": "css" }]]
 }
