@@ -1,6 +1,6 @@
 {
   "name": "antd-form-gen",
-  "version": "2.1.2",
+  "version": "2.1.1",
   "description": "antd-form-gen test",
   "main": "./lib/index.js",
   "files": [
@@ -28,14 +28,6 @@
   "homepage": "https://github.com/NgeKaworu/antd-form-gen#readme",
   "dependencies": {
     "antd": "^3.5.2",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-import": "^1.7.0",
-    "babel-plugin-istanbul": "^4.1.6",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
     "react": "^16.3.2"
   }
 }
