@@ -229,7 +229,7 @@ import { Component } from "react";
 import { Form, Button } from "antd";
 import FormGen from "antd-form-gen";
 import data from "./data.json";
-import OtherComponent from './OtherComponent.
+import OtherComponent from './OtherComponent.'
 
 export default class MyForm extends  {
   render(){
