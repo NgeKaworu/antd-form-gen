@@ -1,5 +1,9 @@
 # antd-form-gen | antd 表单生成器
 
+<b style="color: red;">这个模块已废弃, 请使用[conditionRender](https://www.npmjs.com/package/conditionRender)代替</b>
+
+<b style="color: red;">This Module has been deprecated, please use [conditionRender](https://www.npmjs.com/package/conditionRender)</b>
+
 **v2.1.0**
 
 支持 prop 的组件渲染.
@@ -78,49 +82,49 @@ Form.create()(MyForm)
 ```js
 [
   {
-    id: "select", //组件id
-    title: "选择栏", //label名
-    type: "Select", //类型 必须对应antd 注意首字母大写
+    id: 'select', //组件id
+    title: '选择栏', //label名
+    type: 'Select', //类型 必须对应antd 注意首字母大写
     children: [
       //子元素
       {
-        type: "Select.Option", //子元素类型, 同上
+        type: 'Select.Option', //子元素类型, 同上
         props: {
           //子元素prps
-          value: "a1"
+          value: 'a1',
         },
-        children: "a1" //子元素的子元素
+        children: 'a1', //子元素的子元素
       },
       {
-        type: "Select.Option",
+        type: 'Select.Option',
         props: {
-          value: "b2"
+          value: 'b2',
         },
-        children: "b2"
+        children: 'b2',
       },
       {
-        type: "Select.Option",
+        type: 'Select.Option',
         props: {
-          value: "c3"
+          value: 'c3',
         },
-        children: "c3"
-      }
+        children: 'c3',
+      },
     ],
-    initialValue: "b2", // 初始值
+    initialValue: 'b2', // 初始值
     layout: {
       // 布局, 三列以内 第一列会自动对齐, 与antd layout规则一致
       xs: 24,
-      sm: 8
+      sm: 8,
     },
     props: {
       // 与对应组件支持的props一致 不支持event 和 cb
-      size: "large"
+      size: 'large',
     },
     options: {
       // 与getFieldDecorator.option一致 不支持event 和 cb
-      validateTrigger: ["onChange", "onBlur"]
-    }
-  }
+      validateTrigger: ['onChange', 'onBlur'],
+    },
+  },
 ];
 ```
 
@@ -128,16 +132,16 @@ Form.create()(MyForm)
 
 ![usage](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/usage.png)
 
-### `_layoutTransform()`  
+### `_layoutTransform()`
 
-**接受一个layout对象转换成formItemLayout对象, 三列内首列自动对齐**
+**接受一个 layout 对象转换成 formItemLayout 对象, 三列内首列自动对齐**
 
 ```js
-import { _layoutTransform } from "antd-form-gen";
+import { _layoutTransform } from 'antd-form-gen';
 
 const _col_1 = {
   xs: 24,
-  sm: 12
+  sm: 12,
 };
 
 const transLayout = _layoutTransform(_col_1);
@@ -153,68 +157,69 @@ const transLayout = _layoutTransform(_col_1);
 // };
 ```
 
-### `_recursionRender()`   
-**通过json渲染antd组件**
+### `_recursionRender()`
+
+**通过 json 渲染 antd 组件**
 
 ```js
-import React from "react";
-import { _recursionRender } from "antd-form-gen";
+import React from 'react';
+import { _recursionRender } from 'antd-form-gen';
 
 const json = [
   {
-    type: "Select",
+    type: 'Select',
     props: {
-      defaultValue: "233",
-      size: "large"
+      defaultValue: '233',
+      size: 'large',
     },
     children: [
       {
-        type: "Select.Option",
+        type: 'Select.Option',
         props: {
-          value: 123
+          value: 123,
         },
-        children: "123"
+        children: '123',
       },
       {
-        type: "Select.Option",
+        type: 'Select.Option',
         props: {
-          value: 233
+          value: 233,
         },
-        children: "233"
-      }
-    ]
+        children: '233',
+      },
+    ],
   },
   {
-    type: "Input",
+    type: 'Input',
     props: {
-      defaultValue: "123",
-      size: "large"
-    }
+      defaultValue: '123',
+      size: 'large',
+    },
   },
   {
-    type: "Switch",
+    type: 'Switch',
     props: {
       checkedChildren: {
         // props 下的 子component渲染
-        type: "Icon",
+        type: 'Icon',
         props: {
-          type: "check"
-        }
+          type: 'check',
+        },
       },
       unCheckedChildren: {
-        type: "Icon",
-        props: { type: "cross" }
+        type: 'Icon',
+        props: { type: 'cross' },
       },
-      defaultChecked: true
-    }
-  }
+      defaultChecked: true,
+    },
+  },
 ];
 
 const MyComp = () => <div>{_recursionRender(json)}</div>;
 
 export default MyComp;
 ```
-  
+
 效果如下:  
 ![效果图](https://raw.githubusercontent.com/NgeKaworu/antd-form-gen/master/recursionRender.png)
 
@@ -254,138 +259,138 @@ Form.create()(MyForm)
 ```js
 const _col_1 = {
   xs: 24,
-  sm: 24
+  sm: 24,
 };
 
 const _col_2 = {
   xs: 24,
-  sm: 12
+  sm: 12,
 };
 
 const _col_3 = {
   xs: 24,
-  sm: 8
+  sm: 8,
 };
 
 const data = [
   {
-    id: "draft",
-    title: "拟稿",
+    id: 'draft',
+    title: '拟稿',
     content: [
       {
-        id: "input",
-        title: "输入框",
-        type: "Input",
+        id: 'input',
+        title: '输入框',
+        type: 'Input',
         props: {
-          placeholder: "lalal"
+          placeholder: 'lalal',
         },
         layout: _col_1,
-        options: { validateTrigger: ["onChange", "onBlur"] }
+        options: { validateTrigger: ['onChange', 'onBlur'] },
       },
       {
-        id: "select",
-        title: "选择栏",
-        type: "Select",
+        id: 'select',
+        title: '选择栏',
+        type: 'Select',
         children: [
           {
-            type: "Select.Option",
-            props: { value: "a" },
-            children: "a"
+            type: 'Select.Option',
+            props: { value: 'a' },
+            children: 'a',
           },
           {
-            type: "Select.Option",
+            type: 'Select.Option',
             props: { value: 2 },
-            children: 2
+            children: 2,
           },
           {
-            type: "Select.Option",
+            type: 'Select.Option',
             props: { value: 3 },
-            children: 3
-          }
+            children: 3,
+          },
         ],
-        layout: _col_2
+        layout: _col_2,
       },
       {
-        id: "Radio",
-        title: "单选按钮",
-        type: "Radio.Group",
+        id: 'Radio',
+        title: '单选按钮',
+        type: 'Radio.Group',
         children: [
           {
-            type: "Radio.Button",
+            type: 'Radio.Button',
             props: { value: 1 },
-            children: 1
+            children: 1,
           },
           {
-            type: "Radio.Button",
-            props: { value: "b" },
-            children: "b"
+            type: 'Radio.Button',
+            props: { value: 'b' },
+            children: 'b',
           },
           {
-            type: "Radio.Button",
-            props: { value: "c" },
-            children: "c"
-          }
+            type: 'Radio.Button',
+            props: { value: 'c' },
+            children: 'c',
+          },
         ],
-        layout: _col_2
+        layout: _col_2,
       },
       {
-        id: "datepicker",
-        title: "时间选择器",
-        type: "DatePicker",
+        id: 'datepicker',
+        title: '时间选择器',
+        type: 'DatePicker',
         props: {
-          format: "YYYY-MM-DD HH:mm",
-          showTime: { format: "HH:mm" }
+          format: 'YYYY-MM-DD HH:mm',
+          showTime: { format: 'HH:mm' },
         },
 
-        layout: _col_3
+        layout: _col_3,
       },
       {
-        id: "switch",
-        title: "开关",
-        type: "Switch",
+        id: 'switch',
+        title: '开关',
+        type: 'Switch',
         props: {
           checkedChildren: {
-            type: "Icon",
+            type: 'Icon',
             props: {
-              type: "check"
-            }
+              type: 'check',
+            },
           },
           unCheckedChildren: {
-            type: "Icon",
-            props: { type: "cross" }
+            type: 'Icon',
+            props: { type: 'cross' },
           },
-          defaultChecked: true
+          defaultChecked: true,
         },
         layout: _col_3,
         rules: [
           {
-            required: false
-          }
-        ]
+            required: false,
+          },
+        ],
       },
       {
-        id: "InputNumber",
-        title: "数字输入",
-        type: "InputNumber",
-        suffix: "分",
+        id: 'InputNumber',
+        title: '数字输入',
+        type: 'InputNumber',
+        suffix: '分',
         props: { min: 0, max: 20 },
-        layout: _col_3
+        layout: _col_3,
       },
       {
-        id: "Input.TextArea",
-        title: "内容摘要",
-        type: "Input.TextArea",
+        id: 'Input.TextArea',
+        title: '内容摘要',
+        type: 'Input.TextArea',
         props: { rows: 6 },
         layout: _col_1,
         rules: [
           {
-            required: false
-          }
+            required: false,
+          },
         ],
-        initialValue: "内容摘要, 不少于50字"
-      }
-    ]
-  }
+        initialValue: '内容摘要, 不少于50字',
+      },
+    ],
+  },
 ];
 ```
 
