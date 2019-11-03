@@ -1,8 +1,8 @@
 # antd-form-gen | antd 表单生成器
 
-<b style="color: red;">这个模块已废弃, 请使用[conditionRender](https://www.npmjs.com/package/conditionRender)代替</b>
+<b style="color: red;">这个模块已废弃, 请使用[condition-render](https://www.npmjs.com/package/condition-render)代替</b>
 
-<b style="color: red;">This Module has been deprecated, please use [conditionRender](https://www.npmjs.com/package/conditionRender)</b>
+<b style="color: red;">This Module has been deprecated, please use [condition-render](https://www.npmjs.com/package/condition-render)</b>
 
 **v2.1.0**
 
